@@ -1,43 +1,45 @@
+public class User
+{
+    public string Username { get; }
+    public string Password { get; }
+    public string Role { get; }
+
+    public User(string username, string password, string role)
+    {
+        Username = username;
+        Password = password;
+        Role = role;
+    }
+}
+
 public class UserDatabaseStub
 {
-    // Simple lists to store Stub data
-    private List<string> usernames = new List<string>();
-    private List<string> passwords = new List<string>();
-    private List<string> roles = new List<string>();
+    // Store users as objects instead of parallel lists
+    private List<User> users = new List<User>();
 
-    // Stub method to save a user
+    // Save a user
     public void SaveUser(string username, string password, string role)
     {
-        usernames.Add(username);
-        passwords.Add(password);
-        roles.Add(role);
+        users.Add(new User(username, password, role));
     }
 
-    // Stub method to check if username exists
+    // Check if username exists
     public bool UsernameExists(string username)
     {
-        return usernames.Contains(username);
+        return users.Any(u => u.Username == username);
     }
 
-    // Stub method to get stored password
+    // Get stored password
     public string GetPassword(string username)
     {
-        int index = usernames.IndexOf(username);
-        if (index == -1)
-        {
-            return null;
-        }
-        return passwords[index];
+        var user = users.FirstOrDefault(u => u.Username == username);
+        return user?.Password;
     }
 
-    // Stub method to get stored role
+    // Get stored role
     public string GetRole(string username)
     {
-        int index = usernames.IndexOf(username);
-        if (index == -1)
-        {
-            return null;
-        }
-        return roles[index];
+        var user = users.FirstOrDefault(u => u.Username == username);
+        return user?.Role;
     }
 }
