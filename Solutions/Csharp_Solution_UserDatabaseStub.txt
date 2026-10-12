@@ -12,7 +12,23 @@ public class User
     }
 }
 
-public class UserDatabaseStub
+public interface IUserServiceDatabase {
+
+	// Save a user
+	void saveUser(String username, String password, String role);
+
+	// Check if username exists
+	boolean usernameExists(String username);
+
+	// Get stored password
+	String getPassword(String username);
+
+	// Get stored role
+	String getRole(String username);
+
+}
+
+public class UserDatabaseStub : IUserServiceDatabase 
 {
     // Store users as objects instead of parallel lists
     private List<User> users = new List<User>();
